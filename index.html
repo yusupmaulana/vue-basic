@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Belajar Vuejs</title>
+</head>
+<body>
+
+	<div id="app">
+		<input type="text" v-model="texty">
+		<p>{{ texty }}</p>
+
+		<br>
+
+		<input type="checkbox" v-model="genre" value="cowo">Laki2
+		<input type="checkbox" v-model="genre" value="cewe">Prmpn
+		<p> {{ genre }} </p>
+		<br>
+
+		<input type="radio" v-model="lesson" value="html"> html
+		<input type="radio" v-model="lesson" value="css"> css
+		<p> {{ lesson }} </p>
+	</div>
+
+	<script src="vue.js"></script>
+	<script>
+		var vo = new Vue({
+			el: '#app',
+			data : {
+				genre : [],
+				lesson : []
+			},
+		});
+
+	</script>
+</body>
+</html>

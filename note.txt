@@ -1,0 +1,223 @@
+===============
+1. Vue instance
+---------------
+cara penulisan
+<script src="vue.js"></script>
+<script>
+    var vo = new Vue({
+        el: '#app',
+        data : {
+            nama : "yusup",
+            umur : 22,
+            raw  : "<p><b>mantap jaya boz!</b></p>",
+            laki : false,
+        },
+    });
+</script>
+================
+
+=================
+2. data binding
+------------
+sistem templating
+kita bisa melakukan expresion javascript biasa pada sistem templating ini, seperti nambahin method, thernary operator, manipulasi nilai dari variabel. dsb.
+{{* nama }} nilai dari variabel nya nggak akan berubah (constant).
+{{ raw }} kalo isinya elemen html, maka akan di tampilkan plain text / string.
+{{{ raw }}} kalo isinya elemen html, makan akan di render sebagai html.
+
+<div id="app">
+    {{ nama.split('').reverse().join('') }}  // method di javascript
+    <br>
+    {{ laki ? 'dia laki-laki' : 'dia perempuan'}} // thernary operator
+    <br>
+    {{ nama + " maulana"}} // manipulasi string
+    {{ nama }} - {{* umur }} - {{ raw }} - {{{ raw }}}
+</div>
+==================
+
+===================
+3. computed properties
+-------------------
+variable yang nilai nya bergantung kepada variable sebelumnya.
+bisa menggunakan metode set() dan get()
+........
+data : {
+    nama: "yusup",
+    umur: 30,
+    biodata: ""
+},
+computed: {
+    biodata: {
+        get: function(){
+            return this.nama + " umurnya " + this.umur;
+        },
+        set: function(params){
+            var credential = params.split(' ');
+            this.nama = credential[0];
+            this.umur = credential[1];
+        }
+    }
+}
+..........
+========================
+
+
+======================
+4. Conditional directives
+----------------------
+directives adalah fungsi yang udah datang dari vuejs. salah satunya adalah conditional directives
+
+<div v-if="!done || this.umur > 10"> // bisa pake kondisi
+    {{ biodata }}
+</div>
+<div v-else>
+    maaf done nya false
+</div>
+// v-if (harus render ulang utk nampilin datanya) >< v-show (cuma main css style display none)
+=====================
+
+=========
+5. Loop list
+---------
+
+<ul>
+    <li v-for="member in members">
+        {{ member.nama }} - {{ member.umur }}
+    </li>
+
+    <li v-for="n in 5">
+        {{ n }}
+    </li>
+
+    <li v-for="(keys, member) in members">
+        {{ member }} - {{ keys }}
+    </li>
+
+</ul>
+
+data : {
+    members: [
+        { nama: "yusup", umur: 10 },
+        { nama: "maulana", umur: 11 },
+        { nama: "malik", umur: 14 },
+    ]
+},
+============
+
+
+==============
+6. List methods
+--------------
+kita bisa menggunakan metode utk list seperti pada javascript.
+
+Mutating (object aslinya berubah)
+//push, pop, shift, unshift,
+
+Non Mutating
+// filter, concat, slice
+
+<li v-for="member in members" track-by="$index">
+    {{ member.nama }} - {{ $index }}
+</li>
+
+data : {
+    members: [
+        { nama: "yusup", umur: 10, language: "angular" },
+        { nama: "maulana", umur: 12, language: "vue"}
+    ]
+},
+
+vuejs ini dia akan selalu ngerender ulang dan mencoba ngeluarin semua datanya, kita bisa mencegah itu dengan menambahkan directives track-by, directives ini kita ngasih tau ke si vue nya kalo kita mau pake data yang udah exist aja dan kalo ada data baru kemudian ditampilin. track-by harus menggunakan data yg unik.
+
+vo.members.push({ nama: "yeyet", umur: 11 })
+=================================================
+
+==================
+7. menggunakan filter
+------------------
+<h3>filter</h3>
+<li v-for="member in members | orderBy 'umur'| filterBy 'z' in 'nama'" track-by"$index">
+    {{ member.nama | uppercase }} - {{ member.umur }}
+</li>
+==================
+
+==================
+8. methode dan v-on
+------------------
+v-on ini digunakan untuk menangkap event dari user, contohnya ketika user klik mouse atau menekan tombol enter di keyboard.
+
+<div id="app">
+    <input type="text" v-on:keyup.13="cekidot">
+    <button v-on:click="boom('pesan berdarah')">Klik saya</button>
+    <a href="" v-on:click.prevent="cekidot">link</a>
+</div>
+
+data : {
+
+},
+methods: {
+    boom : function(text){
+        alert('boom! '+ text)
+    },
+    cekidot : function(){
+        console.log('cekidot gan!!')
+    }
+}
+
+===================
+
+
+=====================
+9. more on v-on
+---------------------
+selain metode kita juga bisa nyambungin atribut-atribut dengan directives dari vuejs.
+misal:
+directives v-bind: bisa digunakan untuk menambahkan atribut pada elemen html. kalo atribut di v-bind nya nggak dikasih literal, maka nilai dari atribut harus disimpan dalam satu variabel.
+
+dalam v-bind kita bisa ngasih beberapa atribut sekaligus.
+
+<a v-bind:href.literal="google.com" v-on:click.prevent="cekidot">link</a>
+
+<img v-bind="{id:'gambar', src:'gambar'}">
+
+shorthand untuk v-bind:
+v-bind:src.literal="tulis sesuatu"
+:src.literal="tulis sesuatu"
+
+shorthand untuk v-on:
+v-on:click="boom('pesan berdarah')"
+@click="boom('pesan berdarah')"
+========================
+
+========================
+10. input binding
+------------------------
+di bagian ini kita akan nyambungin input-input dengan sistem two way data binding vuejs. cocok untuk live preview
+
+<input type="text" v-model="texty">
+<p>{{ texty }}</p>
+<br>
+
+<input type="checkbox" v-model="genre" value="cowo">Laki2
+<input type="checkbox" v-model="genre" value="cewe">Prmpn
+<p> {{ genre }} </p>
+<br>
+
+<input type="radio" v-model="lesson" value="html"> html
+<input type="radio" v-model="lesson" value="css"> css
+<p> {{ lesson }} </p>
+
+el: '#app',
+data : {
+    genre : [],
+    lesson : []
+},
+
+========================
+
+========================
+11. components
+------------------------
+
+
+========================
