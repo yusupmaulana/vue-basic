@@ -218,6 +218,92 @@ data : {
 ========================
 11. components
 ------------------------
+components ini adalah bisa dibilang sistem templating, dimana kita bisa make components ini berkali-kali.
 
+di view/ tag body:
+<template-baru></template-baru>
+
+di tag script:
+//define
+var TemplateBaru = Vue.extend({
+  template: '<h1> Belajar Vue </h1>'
+})
+
+//register
+Vue.component('template-baru', TemplateBaru)
+
+-----------------------
+penulisan singkat define dan register
+//define dan register
+Vue.component('template-baru', {
+  template: '<h1> Belajar Vue 101</h1>'
+})
+
+---------------------------
+membuat html template di tag body (bukan di javascript)
+
+<template id="post-template">
+  <div class="">
+    <ul>
+      <li>Belajar Vuejs broh</li>
+      <li>Belajar Vuejs broh 2</li>
+      <li>Belajar Vuejs broh 3</li>
+    </ul>
+  </div>
+</template>
+
+//define dan register
+Vue.component('template-baru', {
+  template: '#post-template'
+})
+
+------------------------
+pada view nya kita bisa nambahin parameter, dan kita keluarin nilainya pada template. pada vue.component menggunakan keyword props.
+
+<template-baru message="boom !"></template-baru>
+
+<template id="post-template">
+  ......
+    <li>{{ message }}</li>
+  ......
+</template>
+
+//define dan register
+Vue.component('template-baru', {
+  template: '#post-template',
+  props: ['message']
+})
+
+---------------------------
+kita bisa oper melalui data seperti berikut
+
+tag script:
+//define dan register
+Vue.component('template-baru', {
+  template: '#post-template',
+  props: ['nama', 'umur']
+})
+
+  var vo = new Vue({
+    el: '#app',
+    data: {
+      nama: 'yusup',
+      umur: 111,
+    }
+  });
+
+  tag body:
+  <div id="app">
+		<template-baru :nama="nama" :umur="umur"></template-baru>
+	</div>
+
+	<template id="post-template">
+		<div class="">
+			<ul>
+				<li>{{ nama }}</li>
+				<li>{{ umur }}</li>
+			</ul>
+		</div>
+	</template>
 
 ========================
