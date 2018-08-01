@@ -7,13 +7,14 @@
 <body>
 
 	<div id="app">
-		<template-baru :nama="nama" :umur="umur"></template-baru>
+		<input type="text" v-model="nama">
+		<template-baru :name="nama" :umur="umur"></template-baru>
 	</div>
 
 	<template id="post-template">
 		<div class="">
 			<ul>
-				<li>{{ nama }}</li>
+				<li>{{ name }}</li>
 				<li>{{ umur }}</li>
 			</ul>
 		</div>
@@ -25,7 +26,7 @@
 	//define dan register
 	Vue.component('template-baru', {
 		template: '#post-template',
-		props: ['nama', 'umur']
+		props: ['name', 'umur']
 	})
 
 		var vo = new Vue({

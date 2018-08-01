@@ -307,3 +307,14 @@ Vue.component('template-baru', {
 	</template>
 
 ========================
+
+===========================
+-----------------------------
+12. Components bagian 2
+nama parameter pada view harus sama dengan parameter pada template dan di props nya.
+
+
+===========================
+
+
+===========================
