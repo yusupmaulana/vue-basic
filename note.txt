@@ -319,10 +319,74 @@ nama parameter pada view harus sama dengan parameter pada template dan di props 
 ---------------------------
 dengan dynamic component, kita bisa ganti2 component mana yang akan di aktifkan. (switch component)
 
+<div id="app">
+  // untuk toggle component
+  <ul>
+    <li><a href="#" @click="currentView='home'"> Home </a></li>
+    <li><a href="#" @click="currentView='members'"> Member </a></li>
+  </ul>
+
+  // menampilkan component yang sedang aktif
+  <component :is="currentView" transition="fade" transition-mode="out-in" keep-alive></component>
+</div>
+
+// template komponen
+<template id="home-template">
+  <h1>Selamat Datang</h1>
+  <h2>di blog untuk belajar vuejs</h2>
+</template>
+
+// template komponen
+<template id="member-template">
+  <ul>
+    <li v-for="member in members">
+      {{ member }}
+    </li>
+  </ul>
+</template>
+
+<script src="vue.js"></script>
+<script>
+
+// define dan register component
+Vue.component('home', {
+  template: '#home-template'
+});
+
+// define dan register component
+Vue.component('members', {
+  template: '#member-template',
+  data: function(){
+    return {
+      members: [
+        'asik', 'basik', 'casik', 'dasik'
+      ]
+    }
+  }
+});
+
+  var vo = new Vue({
+    el: '#app',
+    data: {
+      currentView: 'home'
+    }
+  });
+
+</script>
 ===========================
 
 ===========================
 14. Transition vuejs
 ---------------------------
+vuejs menyediakan atribut transition, yang mana nilainya digunakan sebagai prefix dari css nya.
+atribut keep-alive mencegah vuejs me render ulang halaman,
+stagger digunakan untuk memperlambat (terlihat proses nya ketika search sesuatu pada input box, nggak langsung jadi hasilnya).
+atribut transition bisa kita custom, dengan menambahkan:
+Vue.transition('custom-fade', {
+    enterClass: 'bounceInDown',
+    leaveClass: 'fadeOutUp'
+  })
+pada tag script,
+
 
 ===========================

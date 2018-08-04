@@ -11,6 +11,7 @@
 			opacity: 0;
 		}
 	</style>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
 			<li><a href="#" @click="currentView='home'"> Home </a></li>
 			<li><a href="#" @click="currentView='members'"> Member </a></li>
 		</ul>
-		<component :is="currentView" transition="fade" transition-mode="out-in" keep-alive></component>
+		<component :is="currentView" class="animated" transition="custom-fade" transition-mode="out-in" keep-alive></component>
 	</div>
 
 	<template id="home-template">
@@ -29,7 +30,8 @@
 
 	<template id="member-template">
 		<ul>
-			<li v-for="member in members">
+			<input type="text" v-model="search">
+			<li v-for="member in members | filterBy search" transition="stagger" stagger="100">
 				{{ member }}
 			</li>
 		</ul>
@@ -37,6 +39,11 @@
 
 	<script src="vue.js"></script>
 	<script>
+
+	Vue.transition('custom-fade', {
+		enterClass: 'bounceInDown',
+		leaveClass: 'fadeOutUp'
+	})
 
 	Vue.component('home', {
 		template: '#home-template'
@@ -53,12 +60,12 @@
 		}
 	});
 
-		var vo = new Vue({
-			el: '#app',
-			data: {
-				currentView: 'home'
-			}
-		});
+	var vo = new Vue({
+		el: '#app',
+		data: {
+			currentView: 'home'
+		}
+	});
 
 	</script>
 </body>
