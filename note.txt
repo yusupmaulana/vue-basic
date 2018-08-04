@@ -315,6 +315,14 @@ nama parameter pada view harus sama dengan parameter pada template dan di props 
 
 
 ===========================
+13. Dynamic Component
+---------------------------
+dengan dynamic component, kita bisa ganti2 component mana yang akan di aktifkan. (switch component)
 
+===========================
+
+===========================
+14. Transition vuejs
+---------------------------
 
 ===========================

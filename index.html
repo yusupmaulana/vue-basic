@@ -3,37 +3,60 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Belajar Vuejs</title>
+	<style media="screen">
+		.fade-transition{
+			transition: opacity .5s ease;
+		}
+		.fade-enter, .fade-leave{
+			opacity: 0;
+		}
+	</style>
 </head>
 <body>
 
 	<div id="app">
-		<input type="text" v-model="nama">
-		<template-baru :name="nama" :umur="umur"></template-baru>
+		<ul>
+			<li><a href="#" @click="currentView='home'"> Home </a></li>
+			<li><a href="#" @click="currentView='members'"> Member </a></li>
+		</ul>
+		<component :is="currentView" transition="fade" transition-mode="out-in" keep-alive></component>
 	</div>
 
-	<template id="post-template">
-		<div class="">
-			<ul>
-				<li>{{ name }}</li>
-				<li>{{ umur }}</li>
-			</ul>
-		</div>
+	<template id="home-template">
+		<h1>Selamat Datang</h1>
+		<h2>di blog untuk belajar vuejs</h2>
+	</template>
+
+	<template id="member-template">
+		<ul>
+			<li v-for="member in members">
+				{{ member }}
+			</li>
+		</ul>
 	</template>
 
 	<script src="vue.js"></script>
 	<script>
 
-	//define dan register
-	Vue.component('template-baru', {
-		template: '#post-template',
-		props: ['name', 'umur']
-	})
+	Vue.component('home', {
+		template: '#home-template'
+	});
+
+	Vue.component('members', {
+		template: '#member-template',
+		data: function(){
+			return {
+				members: [
+					'asik', 'basik', 'casik', 'dasik'
+				]
+			}
+		}
+	});
 
 		var vo = new Vue({
 			el: '#app',
 			data: {
-				nama: 'yusup',
-				umur: 111,
+				currentView: 'home'
 			}
 		});
 
