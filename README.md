@@ -1,2 +1,2 @@
 # vue-basic
-basic vuejs
+Vuejs 101
